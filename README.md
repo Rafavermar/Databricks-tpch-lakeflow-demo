@@ -1,6 +1,6 @@
 # Databricks TPC-H Lakeflow demo (Free Edition friendly)
 
-![Principal.png](assets/Principal.png)
+![Principal.png](assets/images/Principal.png)
 
 End to end Databricks Lakeflow project using the public **TPC-H** sample data and **Databricks Free Edition**.
 
