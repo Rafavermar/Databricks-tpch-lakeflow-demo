@@ -48,4 +48,7 @@ def with_ingest_metadata(df: DataFrame) -> DataFrame:
 
     Currently only adds `ingest_ts` with the current timestamp.
     """
-    return df.withColumn("ingest_ts", F.current_timestamp())
+    return (
+        df.withColumn("_ingest_ts", F.current_timestamp())
+        .withColumn("_ingest_file", F.col("_metadata.file_path"))
+    )
