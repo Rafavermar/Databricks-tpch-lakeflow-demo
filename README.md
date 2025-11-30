@@ -66,7 +66,7 @@ The goal is **learning + reproducibility**:
   - REGION / dim_region - broader geographic areas (e.g. EUROPE, AMERICA).
 
   - CALENDAR / dim_calendar - derived calendar dimension built from order dates.
-  
+
 ---
 
 ## 2. Prerequisites
@@ -95,7 +95,7 @@ The goal is **learning + reproducibility**:
    - Point it to your GitHub repo
    - In that Git folder create a folder, for example: `rvmlakeflow_etl`
 
-3. **Add Databricks asset bundle**
+3. **Add Databricks asset bundle** **(Within Databricks UI got to Jobs & pipelines > create new ETL > set up as a source-controlled project)**
 
    In your project folder create `databricks.yml` similar to:
 
