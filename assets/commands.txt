@@ -1,0 +1,46 @@
+# Databricks Lakeflow demo – handy commands
+
+## 1. Databricks CLI – asset bundle
+
+# From your local machine, in the project root:
+cd Databricks-tpch-lakeflow-demo/rvmlakeflow (or the name you set)
+
+# Validate the bundle definition for the 'dev' target
+databricks bundle validate --target dev
+
+# Deploy jobs, pipelines and other resources to your workspace
+databricks bundle deploy --target dev
+
+# Trigger a full pipeline run (forced full recompute)
+databricks bundle run rvmlakeflow_etl --target dev --refresh-all true
+
+## 2. Quick Unity Catalog checks (SQL)
+
+-- List all tables created by the pipeline (set your defined Schema)
+SHOW TABLES IN workspace.lf_demo;
+
+-- Row counts for the main fact tables
+SELECT 'fact_lineitem' AS table_name, COUNT(*) AS row_count
+FROM workspace.lf_demo.fact_lineitem
+UNION ALL
+SELECT 'fact_lineitem_quarantine', COUNT(*)
+FROM workspace.lf_demo.fact_lineitem_quarantine;
+
+-- Basic sales sanity-check per year
+SELECT
+  year(order_date) AS year,
+  ROUND(SUM(net_revenue), 2) AS total_net_revenue
+FROM workspace.lf_demo.fact_lineitem
+GROUP BY year(order_date)
+ORDER BY year;
+
+-- Top 5 customers by net revenue
+SELECT
+  c.customer_name,
+  SUM(f.net_revenue) AS total_net_revenue
+FROM workspace.lf_demo.fact_lineitem f
+JOIN workspace.lf_demo.dim_customer c
+  ON f.customer_id = c.customer_id
+GROUP BY c.customer_name
+ORDER BY total_net_revenue DESC
+LIMIT 5;

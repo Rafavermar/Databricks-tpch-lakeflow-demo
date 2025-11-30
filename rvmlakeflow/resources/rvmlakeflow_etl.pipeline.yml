@@ -1,0 +1,14 @@
+# The main pipeline for rvmlakeflow
+
+resources:
+  pipelines:
+    rvmlakeflow_etl:
+      name: rvmlakeflow_etl
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      root_path: "../src/rvmlakeflow_etl"
+
+      libraries:
+        - glob:
+            include: ../src/rvmlakeflow_etl/transformations/**
